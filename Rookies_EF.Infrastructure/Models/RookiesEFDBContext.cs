@@ -43,20 +43,26 @@ namespace Rookies_EFCore.Infrastructure.Models
                 new Department
                 {
                     Id = 1,
-                    Name = "Software Development"
+                    Name = "Software Development",
+                    CreatedAt = DateTime.Now
                 },
                 new Department
                 {
                     Id = 2,
-                    Name = "Finance"
-                }, new Department
+                    Name = "Finance",
+                    CreatedAt = DateTime.Now
+                },
+                new Department
                 {
                     Id = 3,
-                    Name = "Accountant"
-                }, new Department
+                    Name = "Accountant",
+                    CreatedAt = DateTime.Now
+                },
+                new Department
                 {
                     Id = 4,
-                    Name = "HR"
+                    Name = "HR",
+                    CreatedAt = DateTime.Now
                 }
             );
         }
