@@ -1,0 +1,6 @@
+@Rookies_EF.API_HostAddress = http://localhost:5027
+
+GET {{Rookies_EF.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
