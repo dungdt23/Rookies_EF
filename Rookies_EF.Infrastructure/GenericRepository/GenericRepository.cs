@@ -20,21 +20,45 @@ namespace Rookies_EF.Common.GenericRepository
         }
         public async Task<int> AddAsync(T entity)
         {
-            await _dbset.AddAsync(entity);
-            entity.CreatedAt = DateTime.Now;
-            return await _context.SaveChangesAsync();
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                entity.CreatedAt = DateTime.Now;
+                await _dbset.AddAsync(entity);
+                int status = await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return status;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                return ConstantsStatus.Failed;
+            }
+
         }
 
         public async Task<int> DeleteAsync(int id)
         {
-            var entity = await _dbset.FirstOrDefaultAsync(x => x.Id == id);
-            if (entity == null) return ConstantsStatus.Failed;
-            entity.DeletedAt = DateTime.Now;
-            entity.IsDeleted = true;
-            return await _context.SaveChangesAsync();
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var entity = await _dbset.FirstOrDefaultAsync(x => x.Id == id);
+                if (entity == null) return ConstantsStatus.Failed;
+                entity.DeletedAt = DateTime.Now;
+                entity.IsDeleted = true;
+                int status = await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return status;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                return ConstantsStatus.Failed;
+            }
+
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbset.Where(x => !x.IsDeleted).ToListAsync();
         }
@@ -45,9 +69,22 @@ namespace Rookies_EF.Common.GenericRepository
 
         public async Task<int> UpdateAsync(T entity)
         {
-            _dbset.Update(entity);
-            entity.UpdatedAt = DateTime.Now;
-            return await _context.SaveChangesAsync();
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                entity.UpdatedAt = DateTime.Now;
+                _dbset.Update(entity);
+                int status = await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return status;
+            }
+            catch (Exception)
+            {
+
+                await transaction.RollbackAsync();
+                return ConstantsStatus.Failed;
+            }
+
         }
     }
 }

@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middlewares\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Rookies_EF.Common\Rookies_EF.Common.csproj" />
     <ProjectReference Include="..\Rookies_EF.Infrastructure\Rookies_EF.Infrastructure.csproj" />
   </ItemGroup>

@@ -9,6 +9,5 @@ namespace Rookies_EF.API.Dtos.ResponseDtos
         public int Id { get; set; }
         public int Salary { get; set; }
         public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
     }
 }

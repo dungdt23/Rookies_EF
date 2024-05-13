@@ -18,9 +18,18 @@ namespace Rookies_EF.API
                 builder.Configuration.GetConnectionString("MyDB");
             });
             // Add services to the container.
-            builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            builder.Services.AddTransient<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            //DI for repo
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<ISalariesRepository, SalariesRepository>();
+            builder.Services.AddScoped<IProjectEmployeeRepository, ProjectEmployeeRepository>();
+            //DI for service
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<ISalariesService, SalariesService>();
+            builder.Services.AddScoped<IProjectService, ProjectService>();
+            builder.Services.AddScoped<IProjectEmployeeService, ProjectEmployeeService>();
+            //configure auto mapper
             builder.Services.AddAutoMapper(typeof(MapperProfile));
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

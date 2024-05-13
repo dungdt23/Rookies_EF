@@ -10,7 +10,6 @@ namespace Rookies_EF.API.Dtos.ResponseDtos
 
         [Required]
         public DateTime JoinedDate { get; set; }
-        public ResponseSalariesDto? Salary { get; set; }
         public ResponseDepartmentDto? Department { get; set; }
         public ICollection<ResponseProjectDto> Projects { get; set; }
     }

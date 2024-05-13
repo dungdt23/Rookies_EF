@@ -7,34 +7,34 @@ using Rookies_EF.Common;
 
 namespace Rookies_EF.API.Controllers
 {
-    [Route("projects")]
+    [Route("project-employee")]
     [ApiController]
-    public class ProjectController : ControllerBase
+    public class ProjectEmployeeController : ControllerBase
     {
-        private readonly IProjectService _projectService;
-        public ProjectController(IProjectService projectService)
+        private readonly IProjectEmployeeService _projectEmployeeService;
+        public ProjectEmployeeController(IProjectEmployeeService projectEmployeeService)
         {
-            _projectService = projectService;
+            _projectEmployeeService = projectEmployeeService;
         }
         [HttpGet]
-        public async Task<ApiReponse> GetProjects()
+        public async Task<ApiReponse> GetProjectEmployees()
         {
             try
             {
-                var projects = await _projectService.GetAllAsync();
-                if (projects.Count() == 0)
+                var projectEmloyees = await _projectEmployeeService.GetAllAsync();
+                if (projectEmloyees.Count() == 0)
                 {
                     return new ApiReponse
                     {
-                        Message = "Projects list is empty!"
+                        Message = "Project-Employee list is empty!"
                     };
                 }
                 else
                 {
                     return new ApiReponse
                     {
-                        Data = projects,
-                        Message = "Get projects list successfully!"
+                        Data = projectEmloyees,
+                        Message = "Get Project-Employee list successfully!"
                     };
                 }
             }
@@ -47,18 +47,19 @@ namespace Rookies_EF.API.Controllers
                     StatusCode = StatusCodes.Status500InternalServerError
                 }; ;
             }
+
         }
         [HttpPost]
-        public async Task<ApiReponse> Add([FromBody] RequestProjectDto requestProjectDto)
+        public async Task<ApiReponse> Add([FromBody] RequestProjectEmployeeDto requestProjectEmployeeDto)
         {
             try
             {
-                var addStatus = await _projectService.AddAsync(requestProjectDto);
+                var addStatus = await _projectEmployeeService.AddAsync(requestProjectEmployeeDto);
                 if (addStatus == ConstantsStatus.Success)
                 {
                     return new ApiReponse
                     {
-                        Message = "Add a new project successfully!"
+                        Message = "Add a new Project-Employee successfully!"
                     };
                 }
                 else
@@ -66,39 +67,7 @@ namespace Rookies_EF.API.Controllers
                     return new ApiReponse
                     {
                         StatusCode = StatusCodes.Status500InternalServerError,
-                        Message = "Add a new project failed!"
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-
-                return new ApiReponse
-                {
-                    Message = ex.Message,
-                    StatusCode = StatusCodes.Status500InternalServerError
-                }; ;
-            }
-        }
-        [HttpDelete("{id}")]
-        public async Task<ApiReponse> Delete(int id)
-        {
-            try
-            {
-                var addStatus = await _projectService.DeleteAsync(id);
-                if (addStatus == ConstantsStatus.Success)
-                {
-                    return new ApiReponse
-                    {
-                        Message = "Delete project successfully!"
-                    };
-                }
-                else
-                {
-                    return new ApiReponse
-                    {
-                        StatusCode = StatusCodes.Status500InternalServerError,
-                        Message = "Delete project failed!"
+                        Message = "Add a new Project-Employee failed!"
                     };
                 }
             }
@@ -113,17 +82,17 @@ namespace Rookies_EF.API.Controllers
             }
 
         }
-        [HttpPut("{id}")]
-        public async Task<ApiReponse> Update(int id, [FromBody] RequestProjectDto requestProjectDto)
+        [HttpDelete("{projectId}/{employeeId}")]
+        public async Task<ApiReponse> Delete(int projectId, int employeeId)
         {
             try
             {
-                var addStatus = await _projectService.UpdateAsync(id, requestProjectDto);
+                var addStatus = await _projectEmployeeService.DeleteAsync(projectId, employeeId);
                 if (addStatus == ConstantsStatus.Success)
                 {
                     return new ApiReponse
                     {
-                        Message = "Update project successfully!"
+                        Message = "Delete Project-Employee successfully!"
                     };
                 }
                 else
@@ -131,7 +100,40 @@ namespace Rookies_EF.API.Controllers
                     return new ApiReponse
                     {
                         StatusCode = StatusCodes.Status500InternalServerError,
-                        Message = "Update project failed!"
+                        Message = "Delete Project-Employee failed!"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return new ApiReponse
+                {
+                    Message = ex.Message,
+                    StatusCode = StatusCodes.Status500InternalServerError
+                }; ;
+            }
+
+        }
+        [HttpPut]
+        public async Task<ApiReponse> Update([FromBody] RequestProjectEmployeeDto requestProjectEmployeeDto)
+        {
+            try
+            {
+                var addStatus = await _projectEmployeeService.UpdateAsync(requestProjectEmployeeDto);
+                if (addStatus == ConstantsStatus.Success)
+                {
+                    return new ApiReponse
+                    {
+                        Message = "Update Project-Employee successfully!"
+                    };
+                }
+                else
+                {
+                    return new ApiReponse
+                    {
+                        StatusCode = StatusCodes.Status500InternalServerError,
+                        Message = "Update Project-Employee failed!"
                     };
                 }
             }

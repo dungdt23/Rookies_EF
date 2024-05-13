@@ -12,8 +12,8 @@ using Rookies_EFCore.Infrastructure.Models;
 namespace Rookies_EF.Infrastructure.Migrations
 {
     [DbContext(typeof(RookiesEFDBContext))]
-    [Migration("20240510182210_UpdateIsDelete")]
-    partial class UpdateIsDelete
+    [Migration("20240513061414_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,28 +58,28 @@ namespace Rookies_EF.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4849),
                             IsDeleted = false,
                             Name = "Software Development"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4860),
                             IsDeleted = false,
                             Name = "Finance"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4861),
                             IsDeleted = false,
                             Name = "Accountant"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4862),
                             IsDeleted = false,
                             Name = "HR"
                         });
@@ -99,7 +99,7 @@ namespace Rookies_EF.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -112,7 +112,7 @@ namespace Rookies_EF.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SalaryId")
+                    b.Property<int?>("SalaryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -172,6 +172,9 @@ namespace Rookies_EF.Infrastructure.Migrations
                     b.Property<bool>("Enable")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -220,9 +223,7 @@ namespace Rookies_EF.Infrastructure.Migrations
                 {
                     b.HasOne("Rookies_EFCore.Infrastructure.Models.Department", "Department")
                         .WithMany("Employees")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });
@@ -260,8 +261,7 @@ namespace Rookies_EF.Infrastructure.Migrations
 
             modelBuilder.Entity("Rookies_EFCore.Infrastructure.Models.Employee", b =>
                 {
-                    b.Navigation("Salary")
-                        .IsRequired();
+                    b.Navigation("Salary");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,6 +10,7 @@ namespace Rookies_EF.API.Dtos.RequestDtos
 
         [Required]
         public DateTime JoinedDate { get; set; }
-        public int? DepartmentId { get; set; }
+        [Required]
+        public int DepartmentId { get; set; }
     }
 }
