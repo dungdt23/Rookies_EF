@@ -8,6 +8,6 @@ namespace Rookies_EF.API.Services
         Task<IEnumerable<ResponseProjectEmployeeDto>> GetAllAsync();
         Task<int> AddAsync(RequestProjectEmployeeDto requestProjectEmployeeDto);
         Task<int> UpdateAsync(RequestProjectEmployeeDto requestProjectEmployeeDto);
-        Task<int> DeleteAsync(int projectId, int employeeId);
+        Task<int> DeleteAsync(Guid projectId, Guid employeeId);
     }
 }

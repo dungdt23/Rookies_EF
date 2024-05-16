@@ -6,7 +6,7 @@ namespace Rookies_EF.API.Dtos.ResponseDtos
 {
     public class ResponseSalariesDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int Salary { get; set; }
         public int EmployeeId { get; set; }
     }

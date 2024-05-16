@@ -42,25 +42,25 @@ namespace Rookies_EFCore.Infrastructure.Models
             modelBuilder.Entity<Department>().HasData(
                 new Department
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     Name = "Software Development",
                     CreatedAt = DateTime.Now
                 },
                 new Department
                 {
-                    Id = 2,
+                    Id = Guid.NewGuid(),
                     Name = "Finance",
                     CreatedAt = DateTime.Now
                 },
                 new Department
                 {
-                    Id = 3,
+                    Id = Guid.NewGuid(),
                     Name = "Accountant",
                     CreatedAt = DateTime.Now
                 },
                 new Department
                 {
-                    Id = 4,
+                    Id = Guid.NewGuid(),
                     Name = "HR",
                     CreatedAt = DateTime.Now
                 }

@@ -23,7 +23,7 @@ namespace Rookies_EF.Infrastructure.Repositories
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteAsync(int projectId, int employeeId)
+        public async Task<int> DeleteAsync(Guid projectId, Guid employeeId)
         {
             var projectEmployee = await _context.ProjectEmployees
                 .FirstOrDefaultAsync(x => x.ProjectId == projectId && x.EmployeeId == employeeId && !x.IsDeleted);

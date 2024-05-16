@@ -28,13 +28,13 @@ namespace Rookies_EF.Infrastructure.Repositories
                 .Include(x => x.Department)
                 .ToListAsync();
         }
-        public async Task<List<Employee>> GetByDepartmentIdAsync(int departmentId)
+        public async Task<List<Employee>> GetByDepartmentIdAsync(Guid departmentId)
         {
             return await _context.Employees
                 .Where(x => x.DepartmentId == departmentId && !x.IsDeleted).ToListAsync();
         }
 
-        public async Task<List<Project_Employee>> GetByProjectIdAsync(int projectId)
+        public async Task<List<Project_Employee>> GetByProjectIdAsync(Guid projectId)
         {
             return await _context.ProjectEmployees
                 .Where(x => x.ProjectId == projectId && !x.IsDeleted)
@@ -80,16 +80,26 @@ namespace Rookies_EF.Infrastructure.Repositories
         }
         public async Task<IEnumerable<EmployeeDetails>> GetEmployeesBaseOnSalaryAndJoinDate()
         {
-            var query = from employee in _context.Employees
-                        join salaries in _context.Salaries on employee.Id equals salaries.EmployeeId
-                        where salaries.Salary > 100 && employee.JoinedDate > new DateTime(2024, 01, 01) && !employee.IsDeleted
-                        select new EmployeeDetails
-                        {
-                            EmployeeName = employee.Name,
-                            Salary = salaries.Salary,
-                            JoinedDate = employee.JoinedDate
-                        };
-            return await query.ToListAsync();
+            try
+            {
+                DateTime requiredDate = DateTime.Parse(ConstantsEmployeeDetail.Date);
+                var query = from employee in _context.Employees
+                            join salaries in _context.Salaries on employee.Id equals salaries.EmployeeId
+                            where salaries.Salary > ConstantsEmployeeDetail.Salary &&
+                            employee.JoinedDate > requiredDate && !employee.IsDeleted
+                            select new EmployeeDetails
+                            {
+                                EmployeeName = employee.Name,
+                                Salary = salaries.Salary,
+                                JoinedDate = employee.JoinedDate
+                            };
+                return await query.ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

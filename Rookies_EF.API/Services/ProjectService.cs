@@ -29,7 +29,7 @@ namespace Rookies_EF.API.Services
             return await _projectRepository.AddAsync(project);
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(Guid id)
         {
             //if project is removed, remove constraint between project and employees
             var projectEmployees = await _employeeRepository.GetByProjectIdAsync(id);
@@ -48,14 +48,14 @@ namespace Rookies_EF.API.Services
             return projectDtos;
         }
 
-        public async Task<ResponseProjectDto?> GetByIdAsync(int id)
+        public async Task<ResponseProjectDto?> GetByIdAsync(Guid id)
         {
             var project = await _projectRepository.GetByIdAsync(id);
             var projectDto = _mapper.Map<ResponseProjectDto>(project);
             return projectDto;
         }
 
-        public async Task<int> UpdateAsync(int id, RequestProjectDto requestProjectDto)
+        public async Task<int> UpdateAsync(Guid id, RequestProjectDto requestProjectDto)
         {
             var project = _mapper.Map<Project>(requestProjectDto);
             project.Id = id;

@@ -5,7 +5,7 @@ namespace Rookies_EF.API.Dtos.ResponseDtos
 {
     public class ResponseDepartmentDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
     }

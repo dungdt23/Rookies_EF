@@ -10,6 +10,6 @@ namespace Rookies_EF.Infrastructure.Repositories
 {
     public interface ISalariesRepository : IGenericRepository<Salaries>
     {
-        Task<Salaries?> GetByEmployeeIdAsync(int employeeId);
+        Task<Salaries?> GetByEmployeeIdAsync(Guid employeeId);
     }
 }

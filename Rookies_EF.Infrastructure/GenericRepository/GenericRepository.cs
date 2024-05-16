@@ -37,7 +37,7 @@ namespace Rookies_EF.Common.GenericRepository
 
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(Guid id)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
@@ -62,7 +62,7 @@ namespace Rookies_EF.Common.GenericRepository
         {
             return await _dbset.Where(x => !x.IsDeleted).ToListAsync();
         }
-        public async Task<T?> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(Guid id)
         {
             return await _dbset.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
         }

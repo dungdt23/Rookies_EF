@@ -10,8 +10,7 @@ namespace Rookies_EF.Common.GenericModel
 {
     public class BaseEntity
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }

@@ -12,22 +12,35 @@ namespace Rookies_EF.API.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ISalariesRepository _salariesRepository;
+        private readonly IProjectEmployeeRepository _projectEmployeeRepository;
         private readonly IMapper _mapper;
         public EmployeeService(IEmployeeRepository employeeRepository,
             ISalariesRepository salariesRepository,
+            IProjectEmployeeRepository projectEmployeeRepository,
             IMapper mapper)
         {
             _employeeRepository = employeeRepository;
             _salariesRepository = salariesRepository;
+            _projectEmployeeRepository = projectEmployeeRepository;
             _mapper = mapper;
         }
         public async Task<int> AddAsync(RequestEmployeeDto requestEmployeeDto)
         {
+            Guid employeeId = Guid.NewGuid();
             var employee = _mapper.Map<Employee>(requestEmployeeDto);
+            employee.Id = employeeId;
+            // handle adding project for employee
+            var requestProjectEmployee = new RequestProjectEmployeeDto { EmployeeId = employeeId, ProjectId = requestEmployeeDto.ProjectId };
+            var projectEmployee = _mapper.Map<Project_Employee>(requestProjectEmployee);
+            await _projectEmployeeRepository.AddAsync(projectEmployee);
+            // handle adding salary for employee
+            var requestSalary = new RequestSalariesDto { EmployeeId = employeeId, Salary = requestEmployeeDto.Salary };
+            var salary = _mapper.Map<Salaries>(requestSalary);
+            await _salariesRepository.AddAsync(salary);
             return await _employeeRepository.AddAsync(employee);
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(Guid id)
         {
             //handle constraint employee - salaries
             //salaries of employee will be removed if employee is removed
@@ -44,7 +57,7 @@ namespace Rookies_EF.API.Services
             return employeeDtos;
         }
 
-        public async Task<ResponseEmployeeDto?> GetByIdAsync(int id)
+        public async Task<ResponseEmployeeDto?> GetByIdAsync(Guid id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
             var employeeDto = _mapper.Map<ResponseEmployeeDto>(employee);
@@ -67,7 +80,7 @@ namespace Rookies_EF.API.Services
             return await _employeeRepository.GetEmployeesWithProjectName();
         }
 
-        public async Task<int> UpdateAsync(int id, RequestEmployeeDto requestEmployeeDto)
+        public async Task<int> UpdateAsync(Guid id, RequestEmployeeDto requestEmployeeDto)
         {
             var employee = _mapper.Map<Employee>(requestEmployeeDto);
             employee.Id = id;

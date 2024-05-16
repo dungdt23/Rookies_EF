@@ -7,8 +7,8 @@ namespace Rookies_EF.API.Services
     {
         Task<IEnumerable<ResponseProjectDto>> GetAllAsync();
         Task<int> AddAsync(RequestProjectDto requestProjectDto);
-        Task<int> UpdateAsync(int id, RequestProjectDto requestProjectDto);
-        Task<int> DeleteAsync(int id);
-        Task<ResponseProjectDto?> GetByIdAsync(int id);
+        Task<int> UpdateAsync(Guid id, RequestProjectDto requestProjectDto);
+        Task<int> DeleteAsync(Guid id);
+        Task<ResponseProjectDto?> GetByIdAsync(Guid id);
     }
 }

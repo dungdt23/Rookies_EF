@@ -12,6 +12,6 @@ namespace Rookies_EF.Infrastructure.Repositories
         Task<IEnumerable<Project_Employee>> GetAllAsync();
         Task<int> AddAsync(Project_Employee project_Employee);
         Task<int> UpdateAsync(Project_Employee projectEmployee);
-        Task<int> DeleteAsync(int projectId, int employeeId);
+        Task<int> DeleteAsync(Guid projectId, Guid employeeId);
     }
 }

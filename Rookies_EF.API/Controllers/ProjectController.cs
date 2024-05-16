@@ -81,7 +81,7 @@ namespace Rookies_EF.API.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public async Task<ApiReponse> Delete(int id)
+        public async Task<ApiReponse> Delete(Guid id)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace Rookies_EF.API.Controllers
 
         }
         [HttpPut("{id}")]
-        public async Task<ApiReponse> Update(int id, [FromBody] RequestProjectDto requestProjectDto)
+        public async Task<ApiReponse> Update(Guid id, [FromBody] RequestProjectDto requestProjectDto)
         {
             try
             {

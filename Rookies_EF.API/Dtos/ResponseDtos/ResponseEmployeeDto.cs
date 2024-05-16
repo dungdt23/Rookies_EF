@@ -5,6 +5,8 @@ namespace Rookies_EF.API.Dtos.ResponseDtos
 {
     public class ResponseEmployeeDto
     {
+        public Guid Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 

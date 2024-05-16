@@ -25,7 +25,7 @@ namespace Rookies_EF.API.Services
             return await _departmentRepository.AddAsync(department);
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(Guid id)
         {
             //update employees have constraint with department
             var employees = await _employeeRepository.GetByDepartmentIdAsync(id);
@@ -47,14 +47,14 @@ namespace Rookies_EF.API.Services
             return departmentDtos;
         }
 
-        public async Task<ResponseDepartmentDto?> GetByIdAsync(int id)
+        public async Task<ResponseDepartmentDto?> GetByIdAsync(Guid id)
         {
             var department = await _departmentRepository.GetByIdAsync(id);
             var departmentDto = _mapper.Map<ResponseDepartmentDto>(department);
             return departmentDto;
         }
 
-        public async Task<int> UpdateAsync(int id, RequestDepartmentDto requestDepartmentDto)
+        public async Task<int> UpdateAsync(Guid id, RequestDepartmentDto requestDepartmentDto)
         {
             var department = _mapper.Map<Department>(requestDepartmentDto);
             department.Id = id;

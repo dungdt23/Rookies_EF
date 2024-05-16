@@ -21,7 +21,7 @@ namespace Rookies_EF.API.Services
             return await _projectEmployeeRepository.AddAsync(projectEmployee);
         }
 
-        public async Task<int> DeleteAsync(int projectId, int employeeId)
+        public async Task<int> DeleteAsync(Guid projectId, Guid employeeId)
         {
             return await _projectEmployeeRepository.DeleteAsync(projectId, employeeId);
         }

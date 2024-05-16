@@ -11,8 +11,8 @@ namespace Rookies_EFCore.Infrastructure.Models
 {
     public class Project_Employee
     {
-        public int ProjectId { get; set; }
-        public int EmployeeId { get; set; }
+        public Guid ProjectId { get; set; }
+        public Guid EmployeeId { get; set; }
         public bool Enable { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }

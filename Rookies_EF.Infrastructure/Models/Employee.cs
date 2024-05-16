@@ -16,9 +16,9 @@ namespace Rookies_EFCore.Infrastructure.Models
 
         [Required]
         public DateTime JoinedDate { get; set; }
-        public int? SalaryId { get; set; }
+        public Guid? SalaryId { get; set; }
         public Salaries? Salary { get; set; }
-        public int? DepartmentId { get; set; }
+        public Guid? DepartmentId { get; set; }
         public Department? Department { get; set; }
         public ICollection<Project> Projects { get; set; }
     }

@@ -11,4 +11,9 @@ namespace Rookies_EF.Common
         public const int Success = 1;
         public const int Failed = -1;
     }
+    public static class ConstantsEmployeeDetail
+    {
+        public const int Salary = 100;
+        public const string Date = "2024-01-01";
+    }
 }

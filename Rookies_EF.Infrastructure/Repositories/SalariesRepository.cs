@@ -18,7 +18,7 @@ namespace Rookies_EF.Infrastructure.Repositories
 
         }
 
-        public async Task<Salaries?> GetByEmployeeIdAsync(int employeeId)
+        public async Task<Salaries?> GetByEmployeeIdAsync(Guid employeeId)
         {
             var salaries = await _context.Salaries
                 .FirstOrDefaultAsync(x => x.EmployeeId == employeeId && !x.IsDeleted);

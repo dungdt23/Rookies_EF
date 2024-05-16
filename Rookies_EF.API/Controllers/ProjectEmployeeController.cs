@@ -83,7 +83,7 @@ namespace Rookies_EF.API.Controllers
 
         }
         [HttpDelete("{projectId}/{employeeId}")]
-        public async Task<ApiReponse> Delete(int projectId, int employeeId)
+        public async Task<ApiReponse> Delete(Guid projectId, Guid employeeId)
         {
             try
             {

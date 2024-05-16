@@ -21,7 +21,7 @@ namespace Rookies_EF.API.Services
             return await _salariesRepository.AddAsync(salary);
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(Guid id)
         {
             return await _salariesRepository.DeleteAsync(id);
         }
@@ -33,14 +33,14 @@ namespace Rookies_EF.API.Services
             return salaryDtos;
         }
 
-        public async Task<RequestSalariesDto?> GetByIdAsync(int id)
+        public async Task<RequestSalariesDto?> GetByIdAsync(Guid id)
         {
             var salary = await _salariesRepository.GetByIdAsync(id);
             var salaryDto = _mapper.Map<RequestSalariesDto>(salary);
             return salaryDto;
         }
 
-        public async Task<int> UpdateAsync(int id, RequestSalariesDto requestSalaryDto)
+        public async Task<int> UpdateAsync(Guid id, RequestSalariesDto requestSalaryDto)
         {
             var salary = _mapper.Map<Salaries>(requestSalaryDto);
             salary.Id = id;

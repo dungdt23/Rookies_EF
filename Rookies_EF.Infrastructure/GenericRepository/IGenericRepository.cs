@@ -12,8 +12,8 @@ namespace Rookies_EF.Common.GenericRepository
         Task<IEnumerable<T>> GetAllAsync();
         Task<int> AddAsync(T entity);
         Task<int> UpdateAsync(T entity);
-        Task<int> DeleteAsync(int id);
-        Task<T?> GetByIdAsync(int id);
+        Task<int> DeleteAsync(Guid id);
+        Task<T?> GetByIdAsync(Guid id);
 
     }
 }
