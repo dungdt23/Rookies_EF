@@ -9,7 +9,7 @@ namespace Rookies_EF.API.Services
     {
         Task<IEnumerable<ResponseEmployeeDto>> GetAllAsync();
         Task<int> AddAsync(RequestEmployeeDto requestEmployeeDto);
-        Task<int> UpdateAsync(Guid id, RequestEmployeeDto requestEmployeeDto);
+        Task<int> UpdateAsync(Guid id, UpdateEmployeeDto updateEmployeeDto);
         Task<int> DeleteAsync(Guid id);
         Task<ResponseEmployeeDto?> GetByIdAsync(Guid id);
         Task<IEnumerable<EmployeeDepartment>> GetEmployeesWithDepartmentName();

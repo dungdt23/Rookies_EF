@@ -24,11 +24,9 @@ namespace Rookies_EF.Infrastructure.Migrations
 
             modelBuilder.Entity("Rookies_EFCore.Infrastructure.Models.Department", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -54,29 +52,29 @@ namespace Rookies_EF.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4849),
+                            Id = new Guid("1f2a8a64-bff2-4a1a-99de-42378db2dd9d"),
+                            CreatedAt = new DateTime(2024, 5, 17, 0, 36, 59, 673, DateTimeKind.Local).AddTicks(4235),
                             IsDeleted = false,
                             Name = "Software Development"
                         },
                         new
                         {
-                            Id = 2,
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4860),
+                            Id = new Guid("155ce62e-5b74-423a-9658-14833557fc98"),
+                            CreatedAt = new DateTime(2024, 5, 17, 0, 36, 59, 673, DateTimeKind.Local).AddTicks(4250),
                             IsDeleted = false,
                             Name = "Finance"
                         },
                         new
                         {
-                            Id = 3,
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4861),
+                            Id = new Guid("76a53644-8a66-4628-8ede-82ee3e6ccb12"),
+                            CreatedAt = new DateTime(2024, 5, 17, 0, 36, 59, 673, DateTimeKind.Local).AddTicks(4252),
                             IsDeleted = false,
                             Name = "Accountant"
                         },
                         new
                         {
-                            Id = 4,
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4862),
+                            Id = new Guid("fbdbc53c-be43-4f69-80d8-8710f3b87306"),
+                            CreatedAt = new DateTime(2024, 5, 17, 0, 36, 59, 673, DateTimeKind.Local).AddTicks(4254),
                             IsDeleted = false,
                             Name = "HR"
                         });
@@ -84,11 +82,9 @@ namespace Rookies_EF.Infrastructure.Migrations
 
             modelBuilder.Entity("Rookies_EFCore.Infrastructure.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -96,8 +92,8 @@ namespace Rookies_EF.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -109,8 +105,8 @@ namespace Rookies_EF.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SalaryId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SalaryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -124,11 +120,9 @@ namespace Rookies_EF.Infrastructure.Migrations
 
             modelBuilder.Entity("Rookies_EFCore.Infrastructure.Models.Project", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -154,11 +148,11 @@ namespace Rookies_EF.Infrastructure.Migrations
 
             modelBuilder.Entity("Rookies_EFCore.Infrastructure.Models.Project_Employee", b =>
                 {
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -184,11 +178,9 @@ namespace Rookies_EF.Infrastructure.Migrations
 
             modelBuilder.Entity("Rookies_EFCore.Infrastructure.Models.Salaries", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -196,8 +188,8 @@ namespace Rookies_EF.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

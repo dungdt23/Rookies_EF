@@ -21,11 +21,6 @@ namespace Rookies_EF.API.Services
             return await _salariesRepository.AddAsync(salary);
         }
 
-        public async Task<int> DeleteAsync(Guid id)
-        {
-            return await _salariesRepository.DeleteAsync(id);
-        }
-
         public async Task<IEnumerable<ResponseSalariesDto>> GetAllAsync()
         {
             var salaries = await _salariesRepository.GetAllAsync();

@@ -13,7 +13,9 @@ namespace Rookies_EF.API.Dtos
             CreateMap<RequestDepartmentDto, Department>();
             CreateMap<Department, ResponseDepartmentDto>();
             //configure for employee dto
-            CreateMap<RequestEmployeeDto, Employee>();
+            CreateMap<RequestEmployeeDto, Employee>()
+                .ForMember(dest => dest.Salary, opt => opt.Ignore());
+            CreateMap<UpdateEmployeeDto, Employee>();
             CreateMap<Employee, ResponseEmployeeDto>();
             //configure for project dto
             CreateMap<RequestProjectDto, Project>();

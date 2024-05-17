@@ -8,7 +8,6 @@ namespace Rookies_EF.API.Services
         Task<IEnumerable<ResponseSalariesDto>> GetAllAsync();
         Task<int> AddAsync(RequestSalariesDto requestSalaryDto);
         Task<int> UpdateAsync(Guid id, RequestSalariesDto requestSalaryDto);
-        Task<int> DeleteAsync(Guid id);
         Task<RequestSalariesDto?> GetByIdAsync(Guid id);
     }
 }

@@ -17,8 +17,7 @@ namespace Rookies_EF.Infrastructure.Migrations
                 name: "Departments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -34,8 +33,7 @@ namespace Rookies_EF.Infrastructure.Migrations
                 name: "Projects",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -51,12 +49,11 @@ namespace Rookies_EF.Infrastructure.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JoinedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SalaryId = table.Column<int>(type: "int", nullable: true),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    SalaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -76,8 +73,8 @@ namespace Rookies_EF.Infrastructure.Migrations
                 name: "ProjectEmployees",
                 columns: table => new
                 {
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Enable = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -105,10 +102,9 @@ namespace Rookies_EF.Infrastructure.Migrations
                 name: "Salaries",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Salary = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -130,10 +126,10 @@ namespace Rookies_EF.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "IsDeleted", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4849), null, false, "Software Development", null },
-                    { 2, new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4860), null, false, "Finance", null },
-                    { 3, new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4861), null, false, "Accountant", null },
-                    { 4, new DateTime(2024, 5, 13, 13, 14, 14, 74, DateTimeKind.Local).AddTicks(4862), null, false, "HR", null }
+                    { new Guid("155ce62e-5b74-423a-9658-14833557fc98"), new DateTime(2024, 5, 17, 0, 36, 59, 673, DateTimeKind.Local).AddTicks(4250), null, false, "Finance", null },
+                    { new Guid("1f2a8a64-bff2-4a1a-99de-42378db2dd9d"), new DateTime(2024, 5, 17, 0, 36, 59, 673, DateTimeKind.Local).AddTicks(4235), null, false, "Software Development", null },
+                    { new Guid("76a53644-8a66-4628-8ede-82ee3e6ccb12"), new DateTime(2024, 5, 17, 0, 36, 59, 673, DateTimeKind.Local).AddTicks(4252), null, false, "Accountant", null },
+                    { new Guid("fbdbc53c-be43-4f69-80d8-8710f3b87306"), new DateTime(2024, 5, 17, 0, 36, 59, 673, DateTimeKind.Local).AddTicks(4254), null, false, "HR", null }
                 });
 
             migrationBuilder.CreateIndex(

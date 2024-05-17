@@ -8,6 +8,6 @@ namespace Rookies_EF.API.Dtos.ResponseDtos
     {
         public Guid Id { get; set; }
         public int Salary { get; set; }
-        public int EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
     }
 }

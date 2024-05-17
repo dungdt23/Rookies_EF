@@ -13,31 +13,52 @@ namespace Rookies_EF.API.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ISalariesRepository _salariesRepository;
         private readonly IProjectEmployeeRepository _projectEmployeeRepository;
+        private readonly IGenericRepository<Project> _projectRepository;
+        private readonly IGenericRepository<Department> _departmentRepository;
         private readonly IMapper _mapper;
         public EmployeeService(IEmployeeRepository employeeRepository,
             ISalariesRepository salariesRepository,
             IProjectEmployeeRepository projectEmployeeRepository,
+            IGenericRepository<Project> projectRepository,
+            IGenericRepository<Department> departmentRepository,
             IMapper mapper)
         {
             _employeeRepository = employeeRepository;
             _salariesRepository = salariesRepository;
             _projectEmployeeRepository = projectEmployeeRepository;
+            _projectRepository = projectRepository;
+            _departmentRepository = departmentRepository;
             _mapper = mapper;
         }
         public async Task<int> AddAsync(RequestEmployeeDto requestEmployeeDto)
         {
+            //check if department is existed
+            var department = await _departmentRepository.GetByIdAsync(requestEmployeeDto.DepartmentId);
+            if (department == null) throw new Exception("Department is not found! Add failed!");
             Guid employeeId = Guid.NewGuid();
             var employee = _mapper.Map<Employee>(requestEmployeeDto);
             employee.Id = employeeId;
-            // handle adding project for employee
-            var requestProjectEmployee = new RequestProjectEmployeeDto { EmployeeId = employeeId, ProjectId = requestEmployeeDto.ProjectId };
-            var projectEmployee = _mapper.Map<Project_Employee>(requestProjectEmployee);
-            await _projectEmployeeRepository.AddAsync(projectEmployee);
+            var status = await _employeeRepository.AddAsync(employee);
             // handle adding salary for employee
             var requestSalary = new RequestSalariesDto { EmployeeId = employeeId, Salary = requestEmployeeDto.Salary };
             var salary = _mapper.Map<Salaries>(requestSalary);
             await _salariesRepository.AddAsync(salary);
-            return await _employeeRepository.AddAsync(employee);
+            // update salaryId for employee
+            // RequestEmployeeDto only contains amount of salary for user to easily input, so record will be lack of salaryId
+            employee.SalaryId = salary.Id;
+            await _employeeRepository.UpdateAsync(employee);
+            // handle adding project for employee
+            if (_projectRepository.GetByIdAsync(requestEmployeeDto.ProjectId) != null)
+            {
+                var requestProjectEmployee = new RequestProjectEmployeeDto { EmployeeId = employeeId, ProjectId = requestEmployeeDto.ProjectId };
+                var projectEmployee = _mapper.Map<Project_Employee>(requestProjectEmployee);
+                status = await _projectEmployeeRepository.AddAsync(projectEmployee);
+            }
+            else
+            {
+                throw new Exception("Add a new employee successfully! But project id is not found. You need to update later in Project-Employee");
+            }
+            return status;
         }
 
         public async Task<int> DeleteAsync(Guid id)
@@ -80,11 +101,22 @@ namespace Rookies_EF.API.Services
             return await _employeeRepository.GetEmployeesWithProjectName();
         }
 
-        public async Task<int> UpdateAsync(Guid id, RequestEmployeeDto requestEmployeeDto)
+        public async Task<int> UpdateAsync(Guid id, UpdateEmployeeDto updateEmployeeDto)
         {
-            var employee = _mapper.Map<Employee>(requestEmployeeDto);
-            employee.Id = id;
-            return await _employeeRepository.UpdateAsync(employee);
+            var department = await _departmentRepository.GetByIdAsync(updateEmployeeDto.DepartmentId);
+            if (department == null) throw new Exception("Department is not found! Update failed!");
+            var existedEmployee = await _employeeRepository.GetByIdAsync(id);
+            if (existedEmployee != null)
+            {
+                existedEmployee.Name = updateEmployeeDto.Name;
+                existedEmployee.JoinedDate = updateEmployeeDto.JoinedDate;
+                existedEmployee.DepartmentId = updateEmployeeDto.DepartmentId;
+                return await _employeeRepository.UpdateAsync(existedEmployee);
+            }
+            else
+            {
+                throw new Exception("Employee is  not found! Update failed!");
+            }
         }
     }
 }

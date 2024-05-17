@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Rookies_EF.API.Dtos;
 using Rookies_EF.API.Services;
 using Rookies_EF.Common.GenericRepository;
@@ -12,11 +14,10 @@ namespace Rookies_EF.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Register DbContext
-            builder.Services.AddDbContext<RookiesEFDBContext>(options =>
-            {
-                builder.Configuration.GetConnectionString("MyDB");
-            });
+            builder.Services.AddDbContext<RookiesEFDBContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyDB"))
+            );
+
             // Add services to the container.
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             //DI for repo

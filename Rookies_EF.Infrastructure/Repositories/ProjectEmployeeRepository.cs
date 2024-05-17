@@ -18,20 +18,44 @@ namespace Rookies_EF.Infrastructure.Repositories
         }
         public async Task<int> AddAsync(Project_Employee project_Employee)
         {
-            project_Employee.CreatedAt = DateTime.Now;
-            await _context.ProjectEmployees.AddAsync(project_Employee);
-            return await _context.SaveChangesAsync();
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                project_Employee.CreatedAt = DateTime.Now;
+                await _context.ProjectEmployees.AddAsync(project_Employee);
+                int status = await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return status;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                return ConstantsStatus.Failed;
+            }
+
         }
 
         public async Task<int> DeleteAsync(Guid projectId, Guid employeeId)
         {
-            var projectEmployee = await _context.ProjectEmployees
-                .FirstOrDefaultAsync(x => x.ProjectId == projectId && x.EmployeeId == employeeId && !x.IsDeleted);
-            if (projectEmployee == null) return ConstantsStatus.Failed;
-            projectEmployee.DeletedAt = DateTime.Now;
-            projectEmployee.IsDeleted = true;
-            projectEmployee.Enable = false;
-            return await _context.SaveChangesAsync();
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var projectEmployee = await _context.ProjectEmployees
+                    .FirstOrDefaultAsync(x => x.ProjectId == projectId && x.EmployeeId == employeeId && !x.IsDeleted);
+                if (projectEmployee == null) return ConstantsStatus.Failed;
+                projectEmployee.DeletedAt = DateTime.Now;
+                projectEmployee.IsDeleted = true;
+                projectEmployee.Enable = false;
+                int status = await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return status;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                return ConstantsStatus.Failed;
+            }
+
         }
 
         public async Task<IEnumerable<Project_Employee>> GetAllAsync()
@@ -41,9 +65,20 @@ namespace Rookies_EF.Infrastructure.Repositories
 
         public async Task<int> UpdateAsync(Project_Employee projectEmployee)
         {
-            projectEmployee.UpdatedAt = DateTime.Now;
-            _context.ProjectEmployees.Update(projectEmployee);
-            return await _context.SaveChangesAsync();
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                projectEmployee.UpdatedAt = DateTime.Now;
+                _context.ProjectEmployees.Update(projectEmployee);
+                int status = await _context.SaveChangesAsync();
+                return status;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                return ConstantsStatus.Failed;
+            }
+
         }
     }
 }

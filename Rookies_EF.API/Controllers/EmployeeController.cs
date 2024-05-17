@@ -116,7 +116,7 @@ namespace Rookies_EF.API.Controllers
 
         }
         [HttpPut("{id}")]
-        public async Task<ApiReponse> Update(Guid id, [FromBody] RequestEmployeeDto requestEmployeeDto)
+        public async Task<ApiReponse> Update(Guid id, [FromBody] UpdateEmployeeDto requestEmployeeDto)
         {
             try
             {
